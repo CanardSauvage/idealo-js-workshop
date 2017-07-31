@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>idealo JS workshop - DAY 01</title>
+</head>
+<body>
+<p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+<script>
+    // 1. scoped varibales
+    var badVariable = "foo";
+    let goodVariable = "bar";
+    const constVariable = {
+        firstName: "Sebastian",
+        lastName: "Waschnick",
+        age: 31
+    };
+
+    // 2. arrow functions
+    let functionHolder = {
+        goodVariable: "something new",
+        doStuff: () => {
+            // What is 'this' here?
+            console.info(this.goodVariable);
+        },
+        doOtherStuff: function () {
+            // And here?
+            console.info(this.goodVariable);
+
+        }
+    };
+
+    functionHolder.doStuff();
+    functionHolder.doOtherStuff();
+
+    // 3. template strings
+    console.log(`What do you do for a ${goodVariable}?`);
+
+    // 4. spread operator
+    let myArray = ['a', 'b'];
+    console.info(myArray);
+    console.info(...myArray);
+
+    // got chrome 60?
+    //    let somethingNew = {...constVariable};
+    //    console.info(...constVariable);
+
+    // 5. rest parameters
+    function add(a, b, ...args) {
+        console.log(`Length of args: ${args.length}`);
+    }
+    add(1, 2, 3, 4, 5);
+
+    // 6. destructing
+    const someObject = {first: 'Albert', last: 'Einstein', year: 1879, passed: 1955};
+    const {first, last} = someObject;
+
+    const iterable = ['a', 'b'];
+    const [x, y] = iterable;
+
+
+    // 7. default values
+    console.info("### 7. default values ###");
+    function sayHello(name = "Waschi") {
+        console.log(`Hello ${name}`);
+    }
+    sayHello();
+    sayHello("Karl");
+
+    // 8. named parameters
+    function sayBye({name = "Waschi", number = 5}) {
+        console.log(`Bye ${name}, see you in ${number} seconds!`);
+    }
+    sayBye({name: "Karl"});
+
+    // 9. for .. of and foreach
+    let arr = [3, 5, 7];
+    arr.foo = "hallo";
+
+    for (let i in arr) {
+        console.log(i); // logs "0", "1", "2", "foo"
+    }
+
+    for (let i of arr) {
+        console.log(i); // logs "3", "5", "7"
+    }
+
+    arr.forEach((element) => console.info(element));
+
+    // 10. fetch
+    fetch("https://happy-stars.herokuapp.com/api/star")
+        .then((response) => {
+            return response.json();
+        })
+        .then(function (json) {
+            console.info(json);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+    // Bonus. Polyfill
+    // Polyfills
+    if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function (searchString, position) {
+            position = position || 0;
+            return this.indexOf(searchString, position) === position;
+        };
+    }
+
+</script>
+</body>
+</html>
